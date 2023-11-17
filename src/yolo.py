@@ -74,6 +74,7 @@ if __name__ == '__main__':
             y_deviation = centre_y - y_mid
             size = result[2] - result[0]
             action = takeAction(x_deviation, size, OBJECT_SIZE)
+            print("Action",action, f"X: {int(x_deviation)}", (0, int(centre_y)*2-5), f"Y: {int(y_deviation)}", (100, int(centre_y)*2-5), f"Size: {int(size)}", (200, int(centre_y)*2-5))
 
             # Bounding Box
         #     cv2.rectangle(image, (int(result[0]), int(result[1])), (int(result[2]), int(result[3])), 0, 4)
