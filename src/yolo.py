@@ -76,32 +76,32 @@ if __name__ == '__main__':
             action = takeAction(x_deviation, size, OBJECT_SIZE)
 
             # Bounding Box
-            cv2.rectangle(image, (int(result[0]), int(result[1])), (int(result[2]), int(result[3])), 0, 4)
+        #     cv2.rectangle(image, (int(result[0]), int(result[1])), (int(result[2]), int(result[3])), 0, 4)
 
-            # Object Centre
-            cv2.circle(image, (int(x_mid), int(y_mid)), RADIUS, (0, 255, 0), THICKNESS)
+        #     # Object Centre
+        #     cv2.circle(image, (int(x_mid), int(y_mid)), RADIUS, (0, 255, 0), THICKNESS)
 
-            # Texts
-            cv2.rectangle(image, (0, int(centre_y)*2-30), (int(centre_x)*2, int(centre_y)*2), (255, 255, 255), -1)
-            cv2.putText(image, f"X: {int(x_deviation)}", (0, int(centre_y)*2-5), FONT, FONT_SCALE, COLOR, FONT_THICKNESS) 
-            cv2.putText(image, f"Y: {int(y_deviation)}", (100, int(centre_y)*2-5), FONT, FONT_SCALE, COLOR, FONT_THICKNESS) 
-            cv2.putText(image, f"Size: {int(size)}", (200, int(centre_y)*2-5), FONT, FONT_SCALE, COLOR, FONT_THICKNESS) 
-            cv2.putText(image, "Action: " + action, (int(centre_x), int(centre_y)*2-5), FONT, FONT_SCALE, COLOR, FONT_THICKNESS) 
+        #     # Texts
+        #     cv2.rectangle(image, (0, int(centre_y)*2-30), (int(centre_x)*2, int(centre_y)*2), (255, 255, 255), -1)
+        #     cv2.putText(image, f"X: {int(x_deviation)}", (0, int(centre_y)*2-5), FONT, FONT_SCALE, COLOR, FONT_THICKNESS) 
+        #     cv2.putText(image, f"Y: {int(y_deviation)}", (100, int(centre_y)*2-5), FONT, FONT_SCALE, COLOR, FONT_THICKNESS) 
+        #     cv2.putText(image, f"Size: {int(size)}", (200, int(centre_y)*2-5), FONT, FONT_SCALE, COLOR, FONT_THICKNESS) 
+        #     cv2.putText(image, "Action: " + action, (int(centre_x), int(centre_y)*2-5), FONT, FONT_SCALE, COLOR, FONT_THICKNESS) 
         
-        # Frame centre
-        cv2.circle(image, (int(centre_x), int(centre_y)), RADIUS, (0, 0, 255), THICKNESS)
+        # # Frame centre
+        # cv2.circle(image, (int(centre_x), int(centre_y)), RADIUS, (0, 0, 255), THICKNESS)
         
-        # Texts
-        if objectFound == False:
-            cv2.rectangle(image, (0, int(centre_y)*2-30), (int(centre_x)*2, int(centre_y)*2), (255, 255, 255), -1)
-            cv2.putText(image, f"X: -", (0, int(centre_y)*2-5), FONT, FONT_SCALE, COLOR, FONT_THICKNESS) 
-            cv2.putText(image, f"Y: -", (100, int(centre_y)*2-5), FONT, FONT_SCALE, COLOR, FONT_THICKNESS) 
-            cv2.putText(image, f"Size: -", (200, int(centre_y)*2-5), FONT, FONT_SCALE, COLOR, FONT_THICKNESS) 
-            cv2.putText(image, "Action: -", (int(centre_x), int(centre_y)*2-5), FONT, FONT_SCALE, COLOR, FONT_THICKNESS) 
+        # # Texts
+        # if objectFound == False:
+        #     cv2.rectangle(image, (0, int(centre_y)*2-30), (int(centre_x)*2, int(centre_y)*2), (255, 255, 255), -1)
+        #     cv2.putText(image, f"X: -", (0, int(centre_y)*2-5), FONT, FONT_SCALE, COLOR, FONT_THICKNESS) 
+        #     cv2.putText(image, f"Y: -", (100, int(centre_y)*2-5), FONT, FONT_SCALE, COLOR, FONT_THICKNESS) 
+        #     cv2.putText(image, f"Size: -", (200, int(centre_y)*2-5), FONT, FONT_SCALE, COLOR, FONT_THICKNESS) 
+        #     cv2.putText(image, "Action: -", (int(centre_x), int(centre_y)*2-5), FONT, FONT_SCALE, COLOR, FONT_THICKNESS) 
         
 
-        # Display the frame
-        cv2.imshow('Video', image)
+        # # Display the frame
+        # cv2.imshow('Video', image)
 
         # Press 'q' to exit the loop
         if cv2.waitKey(1) & 0xFF == ord('q'):
