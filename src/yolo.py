@@ -1,5 +1,6 @@
 import cv2
 from ultralytics import YOLO
+from COCO import coco_classes
 
 OBJECT = 'Person'
 TOLERANCE = 20
@@ -37,7 +38,7 @@ if __name__ == '__main__':
             print("Error: Could not read frame.")
             break
 
-        results = model.predict(image, classes=[OBJECT])
+        results = model.predict(image, classes=[coco_classes[OBJECT]])
 
         if len(results[0].boxes.xyxy) > 0:
             result = results[0].boxes.xyxy[0]
