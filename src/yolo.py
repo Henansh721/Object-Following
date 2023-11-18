@@ -1,7 +1,9 @@
 from COCO import coco_classes
-import cv2
 from ultralytics import YOLO
 import numpy as np
+from picamera2 import PiCamera
+from picamera2.array import PiRGBArray
+import cv2
 
 OBJECT = 'Person'
 TOLERANCE = 20
@@ -12,8 +14,6 @@ FONT = cv2.FONT_HERSHEY_SIMPLEX
 FONT_SCALE = 0.5
 COLOR = (0, 0, 0)
 FONT_THICKNESS = 1
-RADIUS = 1
-THICKNESS = 5
 
 def takeAction(x, size, size_desired, x_tolerance=TOLERANCE, size_tolerance=TOLERANCE):
     text = ""
@@ -33,24 +33,19 @@ def takeAction(x, size, size_desired, x_tolerance=TOLERANCE, size_tolerance=TOLE
 
 if __name__ == '__main__':
     model = YOLO('yolov8n.pt')
-    
-    # OpenCV VideoCapture for camera
-    cap = cv2.VideoCapture(0)
 
-    # Check if the camera opened successfully
-    if not cap.isOpened():
-        print("Error: Could not open camera.")
-        exit()
+    # Initialize PiCamera
+    camera = PiCamera()
+    camera.resolution = (640, 480)
+    camera.framerate = 30
+    raw_capture = PiRGBArray(camera, size=(640, 480))
 
-    while True:
-        # Read a frame from the camera
-        ret, image = cap.read()
+    # Warm-up time for the camera
+    time.sleep(2)
 
-        # Check if the frame was read successfully
-        if not ret:
-            print("Error: Could not read frame.")
-            break
-        
+    for frame in camera.capture_continuous(raw_capture, format="bgr", use_video_port=True):
+        image = frame.array
+
         results = model.predict(image, classes=[coco_classes[OBJECT]])
 
         if len(results[0].boxes.xyxy) > 0:
@@ -80,10 +75,13 @@ if __name__ == '__main__':
         # Display the image
         cv2.imshow('Camera Feed', image)
 
+        # Clear the stream in preparation for the next frame
+        raw_capture.truncate(0)
+
         # Press 'q' to exit the loop
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
 
     # Release the camera
-    cap.release()
+    camera.close()
     cv2.destroyAllWindows()
