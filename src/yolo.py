@@ -1,5 +1,5 @@
 from COCO import coco_classes
-from ultralytics import YOLO
+# from ultralytics import YOLO
 import numpy as np
 from picamera2 import PiCamera2
 from picamera2.array import PiRGBArray
@@ -33,7 +33,7 @@ def takeAction(x, size, size_desired, x_tolerance=TOLERANCE, size_tolerance=TOLE
     return text
 
 if __name__ == '__main__':
-    model = YOLO('yolov8n.pt')
+    # model = YOLO('yolov8n.pt')
 
     # Initialize PiCamera
     camera = PiCamera2()
@@ -47,34 +47,34 @@ if __name__ == '__main__':
     for frame in camera.capture_continuous(raw_capture, format="bgr", use_video_port=True):
         image = frame.array
 
-        results = model.predict(image, classes=[coco_classes[OBJECT]])
+        # results = model.predict(image, classes=[coco_classes[OBJECT]])
 
-        if len(results[0].boxes.xyxy) > 0:
-            objectFound = True
-        else:
-            objectFound = False
+        # if len(results[0].boxes.xyxy) > 0:
+        #     objectFound = True
+        # else:
+        #     objectFound = False
 
-        # If object is present
-        if objectFound:
-            result = results[0].boxes.xyxy[0]
+        # # If object is present
+        # if objectFound:
+        #     result = results[0].boxes.xyxy[0]
 
-            x_mid = (result[0] + result[2]) / 2
-            y_mid = (result[1] + result[3]) / 2
+        #     x_mid = (result[0] + result[2]) / 2
+        #     y_mid = (result[1] + result[3]) / 2
 
-            x_deviation = x_mid - (image.shape[1] / 2)
-            y_deviation = (image.shape[0] / 2) - y_mid
-            size = result[2] - result[0]
-            action = takeAction(x_deviation, size, OBJECT_SIZE)
-            print("Action", action, f"X: {int(x_deviation)}", f"Y: {int(y_deviation)}", f"Size: {int(size)}")
+        #     x_deviation = x_mid - (image.shape[1] / 2)
+        #     y_deviation = (image.shape[0] / 2) - y_mid
+        #     size = result[2] - result[0]
+        #     action = takeAction(x_deviation, size, OBJECT_SIZE)
+        #     print("Action", action, f"X: {int(x_deviation)}", f"Y: {int(y_deviation)}", f"Size: {int(size)}")
 
-            # Display the result on the image
-            cv2.putText(image, f"X: {int(x_deviation)}", (0, image.shape[0] - 5), FONT, FONT_SCALE, COLOR, FONT_THICKNESS)
-            cv2.putText(image, f"Y: {int(y_deviation)}", (100, image.shape[0] - 5), FONT, FONT_SCALE, COLOR, FONT_THICKNESS)
-            cv2.putText(image, f"Size: {int(size)}", (200, image.shape[0] - 5), FONT, FONT_SCALE, COLOR, FONT_THICKNESS)
-            cv2.putText(image, "Action: " + action, (int(image.shape[1] / 2), image.shape[0] - 5), FONT, FONT_SCALE, COLOR, FONT_THICKNESS)
+        #     # Display the result on the image
+        #     cv2.putText(image, f"X: {int(x_deviation)}", (0, image.shape[0] - 5), FONT, FONT_SCALE, COLOR, FONT_THICKNESS)
+        #     cv2.putText(image, f"Y: {int(y_deviation)}", (100, image.shape[0] - 5), FONT, FONT_SCALE, COLOR, FONT_THICKNESS)
+        #     cv2.putText(image, f"Size: {int(size)}", (200, image.shape[0] - 5), FONT, FONT_SCALE, COLOR, FONT_THICKNESS)
+        #     cv2.putText(image, "Action: " + action, (int(image.shape[1] / 2), image.shape[0] - 5), FONT, FONT_SCALE, COLOR, FONT_THICKNESS)
 
-        # Display the image
-        cv2.imshow('Camera Feed', image)
+        # # Display the image
+        # cv2.imshow('Camera Feed', image)
 
         # Clear the stream in preparation for the next frame
         raw_capture.truncate(0)
