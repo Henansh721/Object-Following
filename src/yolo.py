@@ -1,8 +1,9 @@
 from COCO import coco_classes
 from ultralytics import YOLO
 import numpy as np
-from picamera2 import PiCamera
+from picamera2 import PiCamera2
 from picamera2.array import PiRGBArray
+import time
 import cv2
 
 OBJECT = 'Person'
@@ -35,7 +36,7 @@ if __name__ == '__main__':
     model = YOLO('yolov8n.pt')
 
     # Initialize PiCamera
-    camera = PiCamera()
+    camera = PiCamera2()
     camera.resolution = (640, 480)
     camera.framerate = 30
     raw_capture = PiRGBArray(camera, size=(640, 480))
